@@ -184,6 +184,161 @@ public class Leetcode {
     }
 
 
+    /**
+     * 007  颠倒整数
+     * 给定一个范围为 32 位 int 的整数，将其颠倒。
+     * 例 1:
+     * 输入: 123
+     * 输出:  321
+     * 例 2:
+     * 输入: -123
+     * 输出: -321
+     * @param x
+     * @return
+     */
+    public static int reverse(int x) {
+        long res = 0;
+        while (x != 0) {
+            res = res * 10 + x % 10;
+            x /= 10;
+        }
+        return (res > Integer.MAX_VALUE|| res < Integer.MIN_VALUE) ? 0 : (int) res;
+
+    }
+
+
+    /**
+     *回文数 009
+     * @param x
+     * @return
+     */
+
+    public static  boolean isPalindrome(int x) {
+
+
+      /*  if(x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+        int revertedNumber = 0;
+        while(x > revertedNumber) {
+            revertedNumber = revertedNumber * 10 + x % 10;
+            x /= 10;                         //注意这个过程
+        }
+
+        return x == revertedNumber || x == revertedNumber/10;
+        */
+
+        //此方法实现判断数字是不是回文数   此方法为百度提供的方法
+        //思路： 翻转后比较
+
+        String num = String.valueOf(x);
+        return new StringBuffer(num).reverse().toString().equalsIgnoreCase(num);
+    }
+
+
+    /**
+     * 罗马数字转int
+     * 返回的结果要求在 1 到 3999 的范围内。
+     * @param s
+     * @return
+     */
+    /*
+     public static int romanToInt(String s) {
+        int[] tagVal = new int[256];
+        tagVal['I'] = 1;
+        tagVal['V'] = 5;
+        tagVal['X'] = 10;
+        tagVal['L'] = 50;
+        tagVal['C'] = 100;
+        tagVal['D'] = 500;
+        tagVal['M'] = 1000;
+        int val = 0;
+        for(int i = 0; i < s.length(); i++){
+            if(i+1 >= s.length() || tagVal[s.charAt(i+1)] <= tagVal[s.charAt(i)])
+                val += tagVal[s.charAt(i)];
+            else
+                val -= tagVal[s.charAt(i)];
+        }
+        return val;
+    }*/
+
+
+    //此代码为Leetcode效率最高的代码  51ms
+    public static int romanToInt(String s) {
+        if (s.length() < 1) {
+            return 0;
+        }
+        int result = 0;
+        int sub = getRomanValue(s.charAt(0));
+        int lastv = sub;
+        for (int i = 1; i < s.length(); i++) {
+            char curc = s.charAt(i);
+            int curv = getRomanValue(curc);
+            if (curv == lastv) {
+                sub += curv;
+            } else if (curv < lastv) {
+                result += sub;
+                sub = curv;
+            } else {
+                sub = curv - sub;
+            }
+            lastv = curv;
+        }
+        result += sub;
+        return result;
+    }
+
+    private  static int getRomanValue(char c) {
+        switch (c) {
+            case 'I':
+                return 1;
+            case 'V':
+                return 5;
+            case 'X':
+                return 10;
+            case 'L':
+                return 50;
+            case 'C':
+                return 100;
+            case 'D':
+                return 500;
+            case 'M':
+                return 1000;
+            default:
+                return 0;
+        }
+    }
+
+
+    /**
+     *  宝石与石头   771
+     *  给定字符串J 代表石头中宝石的类型，和字符串 S代表你拥有的石头。
+     *  S 中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。
+     *  J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分大小写，因此"a"和"A"是不同类型的石头。
+     *  示例 1:
+     *  输入: J = "aA", S = "aAAbbbb"
+     *  输出: 3
+     * @param J
+     * @param S
+     * @return
+     */
+    public static int numJewelsInStones(String J, String S) {
+        int i = 0;
+        int jLen = J.length();
+        int sLen = S.length();
+        for(int j = 0 ; j < jLen;j++){
+            for(int s = 0; s < sLen; s++){
+                if(J.charAt(j) == S.charAt(s)){
+                    i++;
+                }
+            }
+        }
+        return  i;
+    }
+
+
+
+
 
 
 

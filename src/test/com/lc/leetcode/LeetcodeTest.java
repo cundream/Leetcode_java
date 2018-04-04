@@ -55,6 +55,27 @@ public class LeetcodeTest {
         print(sorted);
     }
 
+    @Test
+    public void leetcode_reverse_test007() throws  Exception{
+        print(Leetcode.reverse(123));//321
+        print(Leetcode.reverse(-123));//-321
+        print(Leetcode.reverse(1234546499));//0
+    }
+
+    @Test
+    public void leetcode_isPalindrome_test009() throws  Exception{
+        print(Leetcode.isPalindrome(123));//false
+       // print(Leetcode.isPalindrome(-123));//false
+       // print(Leetcode.isPalindrome(12321));//true
+    //    print(Leetcode.isPalindrome(123321));//true
+    }
+
+    @Test
+    public void leetcode_romanToInt_test013() throws  Exception{
+        print(Leetcode.romanToInt("IMMMM"));//3999
+    }
+
+
     private void print(int[] arrays) {
         Arrays.stream(arrays).forEach(System.out::println);
     }
