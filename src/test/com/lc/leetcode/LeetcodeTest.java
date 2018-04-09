@@ -75,6 +75,13 @@ public class LeetcodeTest {
         print(Leetcode.romanToInt("IMMMM"));//3999
     }
 
+    @Test
+    public void leetcode_longestCommonPrefix_test014() throws Exception{
+
+       // print(Leetcode.longestCommonPrefix(new String[]{"sffbda","dafsa","fsasfdaf","ffsdaf","fdsfdda","dafsa1287"}));
+        print(Leetcode.longestCommonPrefix(new String[]{"a","b"}));
+    }
+
 
     private void print(int[] arrays) {
         Arrays.stream(arrays).forEach(System.out::println);

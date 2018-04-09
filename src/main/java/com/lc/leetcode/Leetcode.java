@@ -1,6 +1,7 @@
 package com.lc.leetcode;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,14 +18,15 @@ public class Leetcode {
      * 两数之和   :
      * 给定一个整数数列，找出其中和为特定值的那两个数。
      * 你可以假设每个输入都只会有一种答案，同样的元素不能被重用。
-     *
+     * <p>
      * 示例：
      * 给定 nums = [2, 7, 11, 15], target = 9
      * 因为 nums[0] + nums[1] = 2 + 7 = 9
      * 所以返回 [0, 1]
+     *
      * @param nums
      * @param target
-     * @return  和为 target 两个数的下标
+     * @return 和为 target 两个数的下标
      */
     public static int[] twoSum(int[] nums, int target) {
 
@@ -34,7 +36,7 @@ public class Leetcode {
         for (int i = 0; i < nums.length; i++) {
             int v = target - nums[i];
             for (int j = 0; j < nums.length; j++) {
-                if (nums[j] == v && j != i){
+                if (nums[j] == v && j != i) {
                     result[0] = i;
                     result[1] = j;
                     return result;
@@ -46,7 +48,6 @@ public class Leetcode {
 
 
     /**
-     *
      * 002 两数相加
      * 示例：
      * 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
@@ -54,34 +55,35 @@ public class Leetcode {
      * 原因：342 + 465 = 807
      * 问题描述：给定两个非空的链表，表示两个非负整数。
      * 数字以相反的顺序存储，每个节点包含一个数字。 添加两个数字并将其作为链表返回。
+     *
      * @param l1
      * @param l2
      * @return
      */
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 
-        int carry =0;
+        int carry = 0;
 
         ListNode newHead = new ListNode(0);
-        ListNode p1 = l1, p2 = l2, p3=newHead;
+        ListNode p1 = l1, p2 = l2, p3 = newHead;
 
-        while(p1 != null || p2 != null){
-            if(p1 != null){
+        while (p1 != null || p2 != null) {
+            if (p1 != null) {
                 carry += p1.val;
                 p1 = p1.next;
             }
 
-            if(p2 != null){
+            if (p2 != null) {
                 carry += p2.val;
                 p2 = p2.next;
             }
 
-            p3.next = new ListNode(carry%10);
+            p3.next = new ListNode(carry % 10);
             p3 = p3.next;
             carry /= 10;
         }
 
-        if(carry==1) {
+        if (carry == 1) {
             p3.next = new ListNode(1);
         }
         return newHead.next;
@@ -91,26 +93,27 @@ public class Leetcode {
 
     /**
      * 003 无重复字符的最长子串
-     *给定一个字符串，找出不含有重复字符的 最长子串 的长度。
+     * 给定一个字符串，找出不含有重复字符的 最长子串 的长度。
      * 示例：给定 "abcabcbb" ，没有重复字符的最长子串是 "abc" ，那么长度就是3。
      * 给定 "pwwkew" ，最长子串是 "wke" ，长度是3。请注意答案必须是一个子串，"pwke" 是 子序列 而不是子串。
+     *
      * @param s
      * @return
      */
-    public static  int lengthOfLongestSubstring(String s) {
-        if(s == null){
+    public static int lengthOfLongestSubstring(String s) {
+        if (s == null) {
             return 0;
         }
-        int start = 0,result = 0,length = s.length();
-        Map<Character,Integer> map = new HashMap<>(length);
-        for(int i =0; i <length; i++){
+        int start = 0, result = 0, length = s.length();
+        Map<Character, Integer> map = new HashMap<>(length);
+        for (int i = 0; i < length; i++) {
             char ch = s.charAt(i);
-            if(map.containsKey(ch) && map.get(ch) >=start){
-                start = map.get(ch)+1;
-            }else{
-                result = Math.max(result,i - start+1);
+            if (map.containsKey(ch) && map.get(ch) >= start) {
+                start = map.get(ch) + 1;
+            } else {
+                result = Math.max(result, i - start + 1);
             }
-            map.put(ch,i);
+            map.put(ch, i);
         }
 
         return result;
@@ -118,31 +121,32 @@ public class Leetcode {
     }
 
     /**
-     *004  两个数组的中位数
-     *有两个大小为 m 和 n 的排序数组 nums1 和 nums2 。
+     * 004  两个数组的中位数
+     * 有两个大小为 m 和 n 的排序数组 nums1 和 nums2 。
      * 请找出两个排序数组的中位数并且总的运行时间复杂度为 O(log (m+n)) 。
+     * <p>
+     * 示例：
+     * nums1 = [1, 3]
+     * nums2 = [2]
+     * 中位数是 2.0
      *
-     *  示例：
-     *  nums1 = [1, 3]
-     *  nums2 = [2]
-     *  中位数是 2.0
      * @param nums1
      * @param nums2
      * @return
      */
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        if(nums1 == null){
+        if (nums1 == null) {
             nums1 = new int[0];
         }
 
-        if(nums2 == null){
+        if (nums2 == null) {
             nums2 = new int[0];
         }
 
         int len1 = nums1.length;
         int len2 = nums2.length;
 
-        if(len1 < len2){ //确保第一个数组比第二个数组长度大
+        if (len1 < len2) { //确保第一个数组比第二个数组长度大
             return findMedianSortedArrays(nums2, nums1);
         }
 
@@ -193,6 +197,7 @@ public class Leetcode {
      * 例 2:
      * 输入: -123
      * 输出: -321
+     *
      * @param x
      * @return
      */
@@ -202,18 +207,19 @@ public class Leetcode {
             res = res * 10 + x % 10;
             x /= 10;
         }
-        return (res > Integer.MAX_VALUE|| res < Integer.MIN_VALUE) ? 0 : (int) res;
+        return (res > Integer.MAX_VALUE || res < Integer.MIN_VALUE) ? 0 : (int) res;
 
     }
 
 
     /**
-     *回文数 009
+     * 回文数 009
+     *
      * @param x
      * @return
      */
 
-    public static  boolean isPalindrome(int x) {
+    public static boolean isPalindrome(int x) {
 
 
       /*  if(x < 0 || (x % 10 == 0 && x != 0)) {
@@ -237,8 +243,9 @@ public class Leetcode {
 
 
     /**
-     * 罗马数字转int
+     * 罗马数字转int 013
      * 返回的结果要求在 1 到 3999 的范围内。
+     *
      * @param s
      * @return
      */
@@ -288,7 +295,7 @@ public class Leetcode {
         return result;
     }
 
-    private  static int getRomanValue(char c) {
+    private static int getRomanValue(char c) {
         switch (c) {
             case 'I':
                 return 1;
@@ -311,13 +318,42 @@ public class Leetcode {
 
 
     /**
-     *  宝石与石头   771
-     *  给定字符串J 代表石头中宝石的类型，和字符串 S代表你拥有的石头。
-     *  S 中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。
-     *  J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分大小写，因此"a"和"A"是不同类型的石头。
-     *  示例 1:
-     *  输入: J = "aA", S = "aAAbbbb"
-     *  输出: 3
+     * 最长公共前缀 0014
+     * @param strs
+     * @return
+     */
+
+    public static String longestCommonPrefix(String[] strs) {
+
+        if (strs.length == 0 || strs[0].length() == 0) {
+            return "";
+        }
+        if (strs.length == 1) {
+            return strs[0];
+        }
+        int i = 0;
+        while (i < strs[0].length()) {
+            for (int j = 1; j < strs.length; j++) {
+                if (strs[j].length() < i + 1 || strs[j].charAt(i) != strs[0].charAt(i)) {
+                    return strs[0].substring(0, i);
+                }
+            }
+            i++;
+        }
+        return strs[0];
+
+    }
+
+
+    /**
+     * 宝石与石头   771
+     * 给定字符串J 代表石头中宝石的类型，和字符串 S代表你拥有的石头。
+     * S 中每个字符代表了一种你拥有的石头的类型，你想知道你拥有的石头中有多少是宝石。
+     * J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分大小写，因此"a"和"A"是不同类型的石头。
+     * 示例 1:
+     * 输入: J = "aA", S = "aAAbbbb"
+     * 输出: 3
+     *
      * @param J
      * @param S
      * @return
@@ -326,20 +362,15 @@ public class Leetcode {
         int i = 0;
         int jLen = J.length();
         int sLen = S.length();
-        for(int j = 0 ; j < jLen;j++){
-            for(int s = 0; s < sLen; s++){
-                if(J.charAt(j) == S.charAt(s)){
+        for (int j = 0; j < jLen; j++) {
+            for (int s = 0; s < sLen; s++) {
+                if (J.charAt(j) == S.charAt(s)) {
                     i++;
                 }
             }
         }
-        return  i;
+        return i;
     }
-
-
-
-
-
 
 
 }
